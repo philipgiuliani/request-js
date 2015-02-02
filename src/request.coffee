@@ -23,9 +23,9 @@ class @Request extends Module
 
     @emit "before", @xhr
 
-    @xhr.addEventListener "readystatechange", @_handleStateChange
+    @xhr.addEventListener "readystatechange", @_handleStateChange.bind(this)
 
-    @xhr.send(_params())
+    @xhr.send @_params()
 
   _handleStateChange: ->
     return unless @xhr.readyState is XMLHttpRequest.DONE
