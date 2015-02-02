@@ -8,7 +8,7 @@ module.exports = ->
       temp:  "temp"
 
     resources:
-      src: ["src/request.coffee"]
+      src: ["src/module.coffee", "src/emitter.coffee", "src/request.coffee"]
       spec: ["spec/*.coffee"]
 
     coffee:
@@ -16,6 +16,8 @@ module.exports = ->
         files:
           "<%= meta.temp %>/<%= meta.file %>.js": "<%= resources.src %>"
           "<%= meta.temp %>/spec.js": "<%= resources.spec %>"
+      options:
+        join: true
 
     jasmine:
       pivotal:
