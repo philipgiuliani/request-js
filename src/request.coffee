@@ -16,3 +16,6 @@ class @Request extends Module
         @on event, options[event]
 
   send: ->
+  _params: ->
+    return null unless @data
+    JSON.stringify(@data)

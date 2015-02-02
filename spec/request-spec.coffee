@@ -28,3 +28,16 @@ describe "Request", ->
 
     it "initializes a new XHR request", ->
       expect(request.xhr).toEqual jasmine.any(XMLHttpRequest)
+
+  describe "::_params()", ->
+    describe "when no data is specified", ->
+      it "returns `null`", ->
+        request.data = null
+        expect(request._params()).toBeNull()
+
+    describe "when data is specified", ->
+      it "returns stringified json", ->
+        request.data = { name: "philip" }
+        result = request._params()
+
+        expect(result).toEqual "{\"name\":\"philip\"}"
