@@ -1,0 +1,19 @@
+{
+  "name": "requester-js",
+  "version": "0.0.1",
+  "homepage": "https://github.com/philipgiuliani/requester-js",
+  "author": {
+    "name": "Philip Giuliani",
+    "email": "info@philipg.net"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-coffee": "^0.12.0",
+    "grunt-contrib-jasmine": "^0.8.2"
+  }
+}
