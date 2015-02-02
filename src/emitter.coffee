@@ -8,13 +8,6 @@ Emitter =
     @_callbacks[event].push fn
     this
 
-  once: (event, fn) ->
-    once = =>
-      @off event, once
-      fn.apply this, arguments
-    fn._off = once
-    @on event, once
-
   off: (event, fn) ->
     callbacks = @_callbacks[event]
     return this unless callbacks
