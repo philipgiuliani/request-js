@@ -10,4 +10,9 @@ class @Request extends Module
     @async = options.async || true
     @data = options.data || null
 
+    events = ["before", "success", "error", "complete"]
+    for event in events
+      if typeof options[event] is "function"
+        @on event, options[event]
+
   send: ->

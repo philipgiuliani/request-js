@@ -15,3 +15,16 @@ describe "Request", ->
 
       expect(request.method).toBe "POST"
       expect(request.url).toBe "/api/v1/example.json"
+
+    it "attaches the given events", ->
+      successCallback = ->
+        console.log "It worked"
+
+      request = new Request
+        success: successCallback
+
+      expect(request._callbacks["success"].length).toBe 1
+      expect(request._callbacks["success"][0]).toBe successCallback
+
+    it "initializes a new XHR request", ->
+      expect(request.xhr).toEqual jasmine.any(XMLHttpRequest)
