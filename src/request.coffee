@@ -1,4 +1,6 @@
-class @Request
+class @Request extends Module
+  @include Emitter
+
   constructor: (options = {}) ->
     @xhr = new XMLHttpRequest
 
