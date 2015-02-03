@@ -29,6 +29,7 @@ module.exports = ->
         src: "<%= meta.temp %>/<%= meta.file %>.js"
         options:
           specs: "<%= meta.temp %>/spec.js"
+          vendor: "vendor/*.js"
 
     @loadNpmTasks 'grunt-contrib-coffee'
     @loadNpmTasks 'grunt-contrib-jasmine'

@@ -44,3 +44,23 @@ describe "Request", ->
       request.data = data
 
       expect(request._requestData()).toEqual JSON.stringify(data)
+
+  describe "::send()", ->
+    beforeEach ->
+      jasmine.Ajax.install()
+
+    afterEach ->
+      jasmine.Ajax.uninstall()
+
+    it "emits the `before` event with xhr as argument", ->
+      jasmine.Ajax.stubRequest("/api/v1/users.json").andReturn
+        status: 200
+        responseText: JSON.stringify(user: { id: 1, firstName: "Philip" })
+
+      beforeCallback = jasmine.createSpy("before")
+
+      request.url = "/api/v1/users.json"
+      request.on "before", beforeCallback
+      request.send()
+
+      expect(beforeCallback).toHaveBeenCalled()
