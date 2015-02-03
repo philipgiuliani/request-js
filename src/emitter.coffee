@@ -1,5 +1,5 @@
 Emitter =
-  _callbacks: []
+  _callbacks: {}
 
   on: (event, fn) ->
     @_callbacks[event] or= []

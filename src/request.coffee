@@ -15,18 +15,13 @@ class @Request extends Module
     @merge this, DEFAULTS
     @merge this, options
 
-    # authentication
-    @withCredentials = options.withCredentials
-    @username = options.username
-    @password = options.password
-
     events = ["before", "success", "error", "complete"]
     for event in events
       if typeof options[event] is "function"
         @on event, options[event]
 
   send: ->
-    @xhr.open(@method, @url, @async, username, password)
+    @xhr.open(@method, @url, @async, @username, @password)
 
     @emit "before", @xhr
 
