@@ -26,3 +26,6 @@ Emitter =
       for callback in callbacks.slice 0
         callback.apply(this, args)
     this
+
+Emitter.addEventListener = Emitter.on
+Emitter.removeEventListener = Emitter.off
