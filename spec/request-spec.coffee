@@ -17,8 +17,7 @@ describe "Request", ->
       expect(request.url).toBe "/api/v1/example.json"
 
     it "attaches the given events", ->
-      successCallback = ->
-        console.log "It worked"
+      successCallback = -> true
 
       request = new Request
         success: successCallback

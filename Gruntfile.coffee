@@ -8,7 +8,12 @@ module.exports = ->
       temp:  "temp"
 
     resources:
-      src: ["src/module.coffee", "src/emitter.coffee", "src/request.coffee"]
+      src: [
+        "src/module.coffee"
+        "src/emitter.coffee"
+        "src/helpers.coffee"
+        "src/request.coffee"
+      ]
       spec: ["spec/*.coffee"]
 
     coffee:

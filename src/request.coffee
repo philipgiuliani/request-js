@@ -1,14 +1,24 @@
 class @Request extends Module
   @include Emitter
+  @include Helpers
+
+  DEFAULTS =
+    url: null
+    method: "GET"
+    format: "json"
+    async: true
+    data: null
 
   constructor: (options = {}) ->
     @xhr = new XMLHttpRequest
 
-    @url = options.url
-    @method = options.method || "GET"
-    @format = options.format || "json"
-    @async = options.async || true
-    @data = options.data || null
+    @merge this, DEFAULTS
+    @merge this, options
+
+    # authentication
+    @withCredentials = options.withCredentials
+    @username = options.username
+    @password = options.password
 
     events = ["before", "success", "error", "complete"]
     for event in events
@@ -16,10 +26,7 @@ class @Request extends Module
         @on event, options[event]
 
   send: ->
-    @xhr.open(@method, @url, @async)
-
-    if @format is "json"
-      @xhr.setRequestHeader "Content-Type", "application/json"
+    @xhr.open(@method, @url, @async, username, password)
 
     @emit "before", @xhr
 
