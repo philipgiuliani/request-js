@@ -24,7 +24,6 @@ class @Request extends Module
     @emit "before", @xhr
 
     @xhr.addEventListener "readystatechange", @_handleStateChange.bind(this)
-
     @xhr.send @_params()
 
   _handleStateChange: ->
@@ -48,6 +47,8 @@ class @Request extends Module
   _requestError: ->
     @emit "error", @xhr, @xhr.status
 
-  _params: ->
-    return null unless @data
-    JSON.stringify(@data)
+  _requestData: ->
+    if @data && @data.constructor is Object
+      return JSON.stringify(@data)
+
+    @data

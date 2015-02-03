@@ -1,5 +1,3 @@
-# From: https://gist.github.com/rpflorence/3734609
-
 Emitter =
   _callbacks: []
 
