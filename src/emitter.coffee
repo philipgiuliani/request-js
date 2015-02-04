@@ -1,4 +1,4 @@
-class @Emitter
+class Emitter
   constructor: ->
     @_callbacks = {}
 
