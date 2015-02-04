@@ -1,29 +1,38 @@
-# Request JS [![Build Status](https://travis-ci.org/philipgiuliani/request-js.svg?branch=master)](https://travis-ci.org/philipgiuliani/request-js)
+# Request JS [![Build Status](https://travis-ci.org/philipgiuliani/requester-js.svg?branch=master)](https://travis-ci.org/philipgiuliani/requester-js)
 
-Javascript XHR wrapper around XMLHttpRequest with integrated queueing support.
+Request JS is a wrapper around `XMLHttpRequest` which simplifies its usage and makes it much more readable.
 
-## Usage
+## Options
+```coffeescript
+request = new Request
+  url: "/api/v1/users.json" # URL of the request
+  method: "POST" # Default is `GET`
+  async: false # Default is `true`
+  data: { firstName: "John" } # Data to submit, default is `null`
+
+  before: (xhr) -> true
+  success: (data, xhr, status) -> true
+  error: (xhr, status) -> true
+  complete: (xhr, status) -> true
+```
+
+For the callback description see [Handling the Response](#handling-the-response).
+
+## Examples
 ### Making a Request
-Coffeescript:
 ```coffeescript
 request = new Request
   url: "/api/v1/users.json"
+  method: "POST"
+  data:
+    firstName: "John"
+    lastName: "Doe"
 
-request.send()
-```
-
-Javascript:
-
-```javascript
-request = new Request({
-  url: "/api/v1/users.json"
-})
 request.send()
 ```
 
 ### Handling the Response
-You can attach serval events by using `on` or `addEventListener` to the request to handle the response. The events must be attached before calling `.send()`
-Possible events are:
+You can attach serval events by using `on` or `addEventListener` to the request to handle the response. The events must be attached before calling `.send()`.
 
 | Event name | Parameters        | When
 |------------|-------------------|---------------------------------
@@ -34,16 +43,8 @@ Possible events are:
 
 If the `responseText` was able to be parsed with `JSON.parse`, an `Object` will be returned.
 
-#### Example:
-Coffeescript:
+#### Example
 ```coffeescript
 request.on "success", (data, xhr, status) ->
   alert("Request status was: #{status}")
-```
-
-Javascript:
-```javascript
-request.on("success", function(data, xhr, status) {
-  alert("Request status was: " + status);
-});
 ```
