@@ -22,6 +22,7 @@ class @Request
 
   send: ->
     @xhr.open(@method, @url, @async, @username, @password)
+    @_setRequestHeaders()
 
     @_emitter.emit "before", @xhr
 
@@ -31,6 +32,11 @@ class @Request
   on: (args...) -> @_emitter.on args...
 
   off: (args...) -> @_emitter.off args...
+
+  _setRequestHeaders: ->
+    # TODO: DRY it up (_requestData has the same)
+    if @data && @data.constructor is Object
+      @xhr.setRequestHeader "Content-Type", "application/json;charset=UTF-8"
 
   _handleStateChange: ->
     return unless @xhr.readyState is XMLHttpRequest.DONE
@@ -43,6 +49,7 @@ class @Request
     @_emitter.emit "complete", @xhr, @xhr.status
 
   _requestSuccess: ->
+    # TODO: Use response Content-Type
     if @format is "json"
       response = JSON.parse(@xhr.responseText)
     else
