@@ -1,5 +1,5 @@
-class @Request extends Module
-  @include Helpers
+class @Request
+  Helpers.includeInto(this)
 
   DEFAULTS =
     url: null
