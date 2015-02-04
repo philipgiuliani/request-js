@@ -34,6 +34,14 @@ class @Request
     @xhr.addEventListener "readystatechange", @_handleStateChange.bind(this)
     @xhr.send @_requestData()
 
+  response: ->
+    return false unless @xhr.readyState is XMLHttpRequest.DONE
+
+    try
+      JSON.parse(@xhr.responseText)
+    catch
+      @xhr.responseText
+
   on: (args...) -> @_emitter.on args...
 
   off: (args...) -> @_emitter.off args...
@@ -54,13 +62,7 @@ class @Request
     @_emitter.emit "complete", @xhr, @xhr.status
 
   _requestSuccess: ->
-    # TODO: Use response Content-Type
-    if @format is "json"
-      response = JSON.parse(@xhr.responseText)
-    else
-      response = @xhr.responseText
-
-    @_emitter.emit "success", response, @xhr.status, @xhr
+    @_emitter.emit "success", @response, @xhr.status, @xhr
 
   _requestError: ->
     @_emitter.emit "error", @xhr, @xhr.status
