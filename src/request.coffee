@@ -4,7 +4,6 @@ class @Request
   DEFAULTS =
     url: null
     method: "GET"
-    format: "json"
     async: true
     data: null
 
