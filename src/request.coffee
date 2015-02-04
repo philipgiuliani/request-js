@@ -1,5 +1,4 @@
 class @Request extends Module
-  @include Emitter
   @include Helpers
 
   DEFAULTS =
@@ -10,6 +9,7 @@ class @Request extends Module
     data: null
 
   constructor: (options = {}) ->
+    @_emitter = new Emitter
     @xhr = new XMLHttpRequest
 
     @merge this, DEFAULTS
@@ -18,15 +18,19 @@ class @Request extends Module
     events = ["before", "success", "error", "complete"]
     for event in events
       if typeof options[event] is "function"
-        @on event, options[event]
+        @_emitter.on event, options[event]
 
   send: ->
     @xhr.open(@method, @url, @async, @username, @password)
 
-    @emit "before", @xhr
+    @_emitter.emit "before", @xhr
 
     @xhr.addEventListener "readystatechange", @_handleStateChange.bind(this)
     @xhr.send @_requestData()
+
+  on: (args...) -> @_emitter.on args...
+
+  off: (args...) -> @_emitter.off args...
 
   _handleStateChange: ->
     return unless @xhr.readyState is XMLHttpRequest.DONE
@@ -36,7 +40,7 @@ class @Request extends Module
     else
       @_requestError()
 
-    @emit "complete", @xhr, @xhr.status
+    @_emitter.emit "complete", @xhr, @xhr.status
 
   _requestSuccess: ->
     if @format is "json"
@@ -44,10 +48,10 @@ class @Request extends Module
     else
       response = @xhr.responseText
 
-    @emit "success", response, @xhr.status, @xhr
+    @_emitter.emit "success", response, @xhr.status, @xhr
 
   _requestError: ->
-    @emit "error", @xhr, @xhr.status
+    @_emitter.emit "error", @xhr, @xhr.status
 
   _requestData: ->
     if @data && @data.constructor is Object

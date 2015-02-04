@@ -1,5 +1,6 @@
-Emitter =
-  _callbacks: {}
+class @Emitter
+  constructor: ->
+    @_callbacks = {}
 
   on: (event, fn) ->
     @_callbacks[event] or= []

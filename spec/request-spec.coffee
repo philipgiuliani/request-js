@@ -22,8 +22,8 @@ describe "Request", ->
       request = new Request
         success: successCallback
 
-      expect(request._callbacks["success"].length).toBe 1
-      expect(request._callbacks["success"][0]).toBe successCallback
+      expect(request._emitter._callbacks["success"].length).toBe 1
+      expect(request._emitter._callbacks["success"][0]).toBe successCallback
 
     it "initializes a new XHR request", ->
       expect(request.xhr).toEqual jasmine.any(XMLHttpRequest)
