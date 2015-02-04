@@ -6,6 +6,7 @@ module.exports = ->
       file: "request"
       package: "."
       temp:  "temp"
+      build: "build"
 
     resources:
       src: [
@@ -17,12 +18,18 @@ module.exports = ->
       spec: ["spec/*.coffee"]
 
     coffee:
-      src:
+      specs:
         files:
           "<%= meta.temp %>/<%= meta.file %>.js": "<%= resources.src %>"
           "<%= meta.temp %>/spec.js": "<%= resources.spec %>"
-      options:
-        join: true
+        options:
+          bare: true
+
+      build:
+        files:
+          "<%= meta.build %>/<%= meta.file %>.js": "<%= resources.src %>"
+        options:
+          join: true
 
     jasmine:
       pivotal:
@@ -34,5 +41,5 @@ module.exports = ->
     @loadNpmTasks 'grunt-contrib-coffee'
     @loadNpmTasks 'grunt-contrib-jasmine'
 
-    @registerTask "default", ["coffee"]
-    @registerTask "spec", ["coffee", "jasmine"]
+    @registerTask "default", ["coffee:build"]
+    @registerTask "spec", ["coffee:specs", "jasmine"]
