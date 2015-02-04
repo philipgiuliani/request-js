@@ -1,6 +1,6 @@
 # Request JS [![Build Status](https://travis-ci.org/philipgiuliani/requester-js.svg?branch=master)](https://travis-ci.org/philipgiuliani/requester-js)
 
-Request JS is a wrapper around `XMLHttpRequest` which simplifies its usage and makes it much more readable.
+Request JS is a wrapper around `XMLHttpRequest` which simplifies its usage and makes it more readable.
 
 ## Options
 ```coffeescript
