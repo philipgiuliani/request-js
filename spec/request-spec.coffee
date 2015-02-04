@@ -25,6 +25,13 @@ describe "Request", ->
       expect(request._emitter._callbacks["success"].length).toBe 1
       expect(request._emitter._callbacks["success"][0]).toBe successCallback
 
+    it "removes the events from the options", ->
+      successCallback = -> true
+      request = new Request
+        success: successCallback
+
+      expect(request["success"]).toBeUndefined()
+
     it "initializes a new XHR request", ->
       expect(request.xhr).toEqual jasmine.any(XMLHttpRequest)
 

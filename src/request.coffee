@@ -16,13 +16,14 @@ class @Request
     @_emitter = new Emitter
     @xhr = new XMLHttpRequest
 
-    @merge this, DEFAULTS
-    @merge this, options
-
     events = ["before", "success", "error", "complete"]
     for event in events
       if typeof options[event] is "function"
         @_emitter.on event, options[event]
+        delete options[event]
+
+    @merge this, DEFAULTS
+    @merge this, options
 
   send: ->
     @xhr.open(@method, @url, @async, @username, @password)
