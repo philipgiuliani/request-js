@@ -2,6 +2,8 @@
 
 Request JS is a wrapper around `XMLHttpRequest` which simplifies its usage and makes it more readable.
 
+Get the latest version from [Github Releases](https://github.com/philipgiuliani/request-js/releases).
+
 ## Options
 ```coffeescript
 request = new Request
@@ -48,3 +50,17 @@ If the `responseText` was able to be parsed with `JSON.parse`, an `Object` will 
 request.on "success", (data, xhr, status) ->
   alert("Request status was: #{status}")
 ```
+
+## Contributing
+Ensure that you have installed [Node.js](http://www.nodejs.org) and [npm](http://www.npmjs.org/)
+
+Test that Grunt's CLI is installed by running `grunt --version`. If the command isn't found, run `npm install -g grunt-cli`. For more information about installing Grunt, see the [getting started guide](http://gruntjs.com/getting-started).
+
+1. Fork and clone the repository.
+2. Run `npm install` to install the dependencies.
+3. Run `grunt` to grunt this project.
+
+### Tests
+Make sure that all tests are passing before creating a Pull request. You can run the tests with `grunt test`.
+
+The tests are located in `spec/` and written with [Jasmine](http://jasmine.github.io/).

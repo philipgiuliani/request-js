@@ -12,7 +12,7 @@
     "node": ">= 0.10.0"
   },
   "scripts": {
-    "test": "grunt spec"
+    "test": "grunt test"
   },
   "dependencies": {},
   "devDependencies": {

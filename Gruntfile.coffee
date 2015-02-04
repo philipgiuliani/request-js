@@ -71,4 +71,4 @@ module.exports = ->
     @loadNpmTasks 'grunt-banner'
 
     @registerTask "default", ["coffee:build", "uglify", "usebanner"]
-    @registerTask "spec", ["coffee:specs", "jasmine"]
+    @registerTask "test", ["coffee:specs", "jasmine"]
