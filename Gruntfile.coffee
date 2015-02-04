@@ -38,8 +38,17 @@ module.exports = ->
           specs: "<%= meta.temp %>/spec.js"
           vendor: "vendor/*.js"
 
+    uglify:
+      options:
+        compress:
+          drop_console: true
+      my_target:
+        files:
+          "<%= meta.build %>/<%= meta.file %>.min.js": "<%= meta.build %>/<%= meta.file %>.js"
+
     @loadNpmTasks 'grunt-contrib-coffee'
     @loadNpmTasks 'grunt-contrib-jasmine'
+    @loadNpmTasks 'grunt-contrib-uglify'
 
-    @registerTask "default", ["coffee:build"]
+    @registerTask "default", ["coffee:build", "uglify"]
     @registerTask "spec", ["coffee:specs", "jasmine"]
