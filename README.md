@@ -1,4 +1,4 @@
-# Request JS [![Build Status](https://travis-ci.org/philipgiuliani/requester-js.svg?branch=master)](https://travis-ci.org/philipgiuliani/requester-js)
+# Request JS [![Build Status](https://travis-ci.org/philipgiuliani/request-js.svg?branch=master)](https://travis-ci.org/philipgiuliani/request-js)
 
 Request JS is a wrapper around `XMLHttpRequest` which simplifies its usage and makes it more readable.
 
