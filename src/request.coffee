@@ -8,6 +8,10 @@ class @Request
     async: true
     data: null
 
+  # @POST = (options) ->
+  #   options.method = "POST"
+  #   new Request(options)
+
   constructor: (options = {}) ->
     @_emitter = new Emitter
     @xhr = new XMLHttpRequest
@@ -65,8 +69,3 @@ class @Request
       return JSON.stringify(@data)
 
     @data
-
-# class @Request.POST extends Request
-#   constructor: (options) ->
-#     super(options)
-#     @method = "POST"
