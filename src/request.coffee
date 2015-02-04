@@ -65,3 +65,8 @@ class @Request
       return JSON.stringify(@data)
 
     @data
+
+# class @Request.POST extends Request
+#   constructor: (options) ->
+#     super(options)
+#     @method = "POST"

@@ -28,6 +28,19 @@ describe "Request", ->
     it "initializes a new XHR request", ->
       expect(request.xhr).toEqual jasmine.any(XMLHttpRequest)
 
+  # describe "Class methods to remove method declaration", ->
+  #   describe ".POST()", ->
+  #     request = null
+  #
+  #     beforeEach ->
+  #       request = new Request.POST
+  #
+  #     it "returns a new instance of `Request`", ->
+  #       expect(request).toEqual jasmine.any(Request)
+  #
+  #     it "sets the method to `POST`", ->
+  #       expect(request.method).toEqual "POST"
+
   describe "::_requestData()", ->
     it "returns null when no data is given", ->
       request.data = null
