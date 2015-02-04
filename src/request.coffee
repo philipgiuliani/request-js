@@ -44,7 +44,7 @@ class @Request extends Module
     else
       response = @xhr.responseText
 
-    @emit "success", response, @xhr.status, xhr
+    @emit "success", response, @xhr.status, @xhr
 
   _requestError: ->
     @emit "error", @xhr, @xhr.status
