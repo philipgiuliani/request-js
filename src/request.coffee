@@ -47,28 +47,24 @@ class @Request
   off: (args...) -> @_emitter.off args...
 
   _setRequestHeaders: ->
-    # TODO: DRY it up (_requestData has the same)
-    if @data && @data.constructor is Object
+    if @_dataIsObject()
       @xhr.setRequestHeader "Content-Type", "application/json;charset=UTF-8"
 
   _handleStateChange: ->
     return unless @xhr.readyState is XMLHttpRequest.DONE
 
     if @xhr.status in [200..299]
-      @_requestSuccess()
+      @_emitter.emit "success", @response, @xhr.status, @xhr
     else
-      @_requestError()
+      @_emitter.emit "error", @xhr, @xhr.status
 
     @_emitter.emit "complete", @xhr, @xhr.status
 
-  _requestSuccess: ->
-    @_emitter.emit "success", @response, @xhr.status, @xhr
-
-  _requestError: ->
-    @_emitter.emit "error", @xhr, @xhr.status
+  _dataIsObject: ->
+    @data && @data.constructor is Object
 
   _requestData: ->
-    if @data && @data.constructor is Object
+    if @_dataIsObject()
       return JSON.stringify(@data)
 
     @data
