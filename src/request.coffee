@@ -8,7 +8,7 @@ class @Request
     async: true
     data: null
 
-  # @POST = (options) ->
+  # @POST = (options = {}) ->
   #   options.method = "POST"
   #   new Request(options)
 
