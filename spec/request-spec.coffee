@@ -28,7 +28,7 @@ describe "Request", ->
     it "initializes a new XHR request", ->
       expect(request.xhr).toEqual jasmine.any(XMLHttpRequest)
 
-  # describe "Class methods to remove method declaration", ->
+  # describe "Class methods to set the method nicer", ->
   #   describe ".POST()", ->
   #     request = null
   #
