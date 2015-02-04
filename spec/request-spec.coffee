@@ -73,14 +73,44 @@ describe "Request", ->
       jasmine.Ajax.uninstall()
 
     it "emits the `before` event with xhr as argument", ->
+      jasmine.Ajax.stubRequest("/api/v1/users.json").andReturn(status: 200)
+
+      beforeCallback = jasmine.createSpy("before")
+
+      request = new Request
+        url: "/api/v1/users.json"
+        before: beforeCallback
+      request.send()
+
+      expect(beforeCallback).toHaveBeenCalled()
+
+    it "responds with a JSON object if the response is JSON", ->
       jasmine.Ajax.stubRequest("/api/v1/users.json").andReturn
         status: 200
         responseText: JSON.stringify(user: { id: 1, firstName: "Philip" })
 
-      beforeCallback = jasmine.createSpy("before")
 
-      request.url = "/api/v1/users.json"
-      request.on "before", beforeCallback
+      completeCallback = jasmine.createSpy("complete")
+
+      request = new Request
+        url: "/api/v1/users.json"
+        complete: completeCallback
+
       request.send()
 
-      expect(beforeCallback).toHaveBeenCalled()
+      expect(request.response()).toEqual jasmine.any(Object)
+
+    it "response with the Text if the response isn't parseable as JSON", ->
+      jasmine.Ajax.stubRequest("/api/v1/users.json").andReturn
+        status: 200
+        responseText: "<errors>Amazing</errors>"
+
+      completeCallback = jasmine.createSpy("complete")
+
+      request = new Request
+        url: "/api/v1/users.json"
+        complete: completeCallback
+
+      request.send()
+
+      expect(request.response()).toEqual jasmine.any(String)

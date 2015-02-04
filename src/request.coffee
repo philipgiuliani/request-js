@@ -26,16 +26,16 @@ class @Request
     @merge this, options
 
   send: ->
+    @xhr.addEventListener "readystatechange", @_handleStateChange.bind(this)
     @xhr.open(@method, @url, @async, @username, @password)
+
     @_setRequestHeaders()
 
     @_emitter.emit "before", @xhr
-
-    @xhr.addEventListener "readystatechange", @_handleStateChange.bind(this)
     @xhr.send @_requestData()
 
   response: ->
-    return false unless @xhr.readyState is XMLHttpRequest.DONE
+    return false if @xhr.readyState isnt 4
 
     try
       JSON.parse(@xhr.responseText)
@@ -54,7 +54,7 @@ class @Request
     return unless @xhr.readyState is XMLHttpRequest.DONE
 
     if @xhr.status in [200..299]
-      @_emitter.emit "success", @response, @xhr.status, @xhr
+      @_emitter.emit "success", @response(), @xhr.status, @xhr
     else
       @_emitter.emit "error", @xhr, @xhr.status
 
