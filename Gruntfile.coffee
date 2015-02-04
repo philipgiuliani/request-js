@@ -7,6 +7,14 @@ module.exports = ->
       package: "."
       temp:  "temp"
       build: "build"
+      banner: """
+      /**
+       * <%= pkg.name %> - version <%= pkg.version %>
+       * <%= pkg.description %>
+       * Copyright <%= grunt.template.today("yyyy") %> by <%= pkg.author.name %> - <%= pkg.author.email %>
+       */
+      """
+
 
     resources:
       src: [
@@ -46,9 +54,21 @@ module.exports = ->
         files:
           "<%= meta.build %>/<%= meta.file %>.min.js": "<%= meta.build %>/<%= meta.file %>.js"
 
+    usebanner:
+      options:
+        position: "top"
+        banner: "<%= meta.banner %>"
+        linebreak:true
+      files:
+        src: [
+          "<%= meta.build %>/<%= meta.file %>.js"
+          "<%= meta.build %>/<%= meta.file %>.min.js"
+        ]
+
     @loadNpmTasks 'grunt-contrib-coffee'
     @loadNpmTasks 'grunt-contrib-jasmine'
     @loadNpmTasks 'grunt-contrib-uglify'
+    @loadNpmTasks 'grunt-banner'
 
-    @registerTask "default", ["coffee:build", "uglify"]
+    @registerTask "default", ["coffee:build", "uglify", "usebanner"]
     @registerTask "spec", ["coffee:specs", "jasmine"]
