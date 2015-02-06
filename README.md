@@ -13,9 +13,9 @@ request = new Request
   data: { firstName: "John" } # Data to submit, default is `null`
 
   before: (xhr) -> true
-  success: (data, xhr, status) -> true
-  error: (xhr, status) -> true
-  complete: (xhr, status) -> true
+  success: (response) -> true
+  error: (response) -> true
+  complete: (response) -> true
 ```
 
 For the callback description see [Handling the Response](#handling-the-response).
