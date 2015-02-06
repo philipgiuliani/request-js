@@ -29,7 +29,7 @@ describe "RequestQueue", ->
 
       expect(callback).toHaveBeenCalledWith(job)
 
-  fdescribe "::_dequeue()", ->
+  describe "::_dequeue()", ->
     beforeEach ->
       spyOn queue, "_checkQueue"
 
