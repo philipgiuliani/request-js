@@ -22,5 +22,8 @@ class @RequestQueue
   on: (args...) -> @_emitter.on args...
   off: (args...) -> @_emitter.off args...
 
+  _dequeue: ->
+    @jobs.shift()
+
   _sortJobs: (jobA, jobB) ->
     jobB.priority - jobA.priority

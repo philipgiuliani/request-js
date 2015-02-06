@@ -32,3 +32,14 @@ describe "RequestQueue", ->
       jobHigh = queue.enqueue(request, RequestQueue.HIGH)
 
       expect(queue.jobs).toEqual [jobHigh, jobNormal, jobLow]
+
+  describe "::_dequeue()", ->
+    it "returns the next job in the queue", ->
+      job = queue.enqueue(request)
+      expect(queue._dequeue()).toBe job
+
+    it "removes the job from the queue", ->
+      queue.enqueue(request)
+      queue._dequeue()
+
+      expect(queue.jobs.length).toBe 0
