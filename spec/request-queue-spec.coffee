@@ -7,8 +7,8 @@ describe "RequestQueue", ->
     request = new Request
       url: "/api/v1/users.json"
 
-  describe "::add(request, options={})", ->
+  describe "::enqueue(request, options={})", ->
     it "adds a request to the queue", ->
-      queue.add(request)
+      queue.enqueue(request)
 
-      expect(queue.queue.length).toEqual 1
+      expect(queue.requests.length).toEqual 1

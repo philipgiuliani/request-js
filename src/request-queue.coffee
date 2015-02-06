@@ -1,6 +1,6 @@
 class @RequestQueue
   constructor: ->
-    @queue = []
+    @requests = []
 
-  add: (request, options={}) ->
-    @queue.push request
+  enqueue: (request, options={}) ->
+    @requests.push request
