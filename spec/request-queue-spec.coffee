@@ -11,4 +11,4 @@ describe "RequestQueue", ->
     it "adds a request to the queue", ->
       queue.enqueue(request)
 
-      expect(queue.requests.length).toEqual 1
+      expect(queue.jobs.length).toEqual 1
