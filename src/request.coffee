@@ -15,7 +15,7 @@ class @Request
     @_emitter = new Emitter
     @xhr = new XMLHttpRequest
 
-    events = ["before", "success", "error", "complete"]
+    events = ["before", "success", "error", "complete", "progress"]
     for event in events
       if typeof options[event] is "function"
         @_emitter.on event, options[event]
@@ -25,7 +25,8 @@ class @Request
     @merge this, options
 
   send: ->
-    @xhr.addEventListener "readystatechange", @_handleStateChange.bind(this)
+    @xhr.addEventListener "progress", @_progressChange.bind(this)
+    @xhr.addEventListener "readystatechange", @_stateChange.bind(this)
     @xhr.open(@method, @url, @async, @username, @password)
 
     @_setRequestHeaders()
@@ -49,7 +50,10 @@ class @Request
     if @_dataIsObject()
       @xhr.setRequestHeader "Content-Type", "application/json;charset=UTF-8"
 
-  _handleStateChange: ->
+  _progressChange: (args...) ->
+    @_emitter.emit "progress", args...
+
+  _stateChange: ->
     return unless @xhr.readyState is XMLHttpRequest.DONE
 
     if @xhr.status in [200..299]
