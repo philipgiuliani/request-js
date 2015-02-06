@@ -6,9 +6,9 @@ class @RequestQueue
   @HIGH: 2
   @VERY_HIGH: 3
 
-  constructor: ->
+  constructor: (@workerCount=1) ->
     @jobs = []
-    @currentJob = null
+    @runningJobs = []
     @_emitter = new Emitter
 
   enqueue: (request, priority) ->
@@ -25,14 +25,16 @@ class @RequestQueue
   off: (args...) -> @_emitter.off args...
 
   _checkQueue: ->
-    return if @currentJob
+    return if @runningJobs.length >= @workerCount
 
-    @currentJob = @_dequeue()
-    @_emitter.emit "start", @currentJob
+    while @jobs.length > 0 and @runningJobs.length < @workerCount
+      nextJob = @_dequeue()
+      @_emitter.emit "start", nextJob
+      @runningJobs.push nextJob
 
-    request = @currentJob.request
-    request.on "complete", @_requestComplete.bind(this)
-    request.send()
+      request = nextJob.request
+      request.on "complete", @_jobComplete.bind(this, nextJob)
+      request.send()
 
   _dequeue: ->
     return null if @jobs.length is 0
@@ -53,8 +55,10 @@ class @RequestQueue
 
     false
 
-  _requestComplete: ->
-    @_emitter.emit "finish", @currentJob
+  _jobComplete: (job) ->
+    @_emitter.emit "finish", job
 
-    @currentJob = null
+    index = @runningJobs.indexOf(job)
+    @runningJobs.splice(index, 1)
+
     @_checkQueue()
