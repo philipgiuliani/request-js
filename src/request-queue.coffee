@@ -1,4 +1,4 @@
-class RequestQueue
+class @RequestQueue
   constructor: ->
     @queue = []
 
