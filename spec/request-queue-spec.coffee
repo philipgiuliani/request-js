@@ -29,17 +29,21 @@ describe "RequestQueue", ->
 
       expect(callback).toHaveBeenCalledWith(job)
 
-    it "sorts the jobs by the priority after adding one", ->
-      jobNormal = queue.enqueue(request, RequestQueue.NORMAL)
-      jobLow = queue.enqueue(request, RequestQueue.LOW)
-      jobHigh = queue.enqueue(request, RequestQueue.HIGH)
+  fdescribe "::_dequeue()", ->
+    beforeEach ->
+      spyOn queue, "_checkQueue"
 
-      expect(queue.jobs).toEqual [jobHigh, jobNormal, jobLow]
-
-  describe "::_dequeue()", ->
-    it "returns the next job in the queue", ->
+    it "gets the next job in the queue", ->
       job = queue.enqueue(request)
       expect(queue._dequeue()).toBe job
+
+    it "should get the next job sorted by the highest priority and time", ->
+      jobNormal = queue.enqueue(request)
+      jobHigh1 = queue.enqueue(request, RequestQueue.HIGH)
+      jobLow = queue.enqueue(request, RequestQueue.LOW)
+      jobHigh3 = queue.enqueue(request, RequestQueue.HIGH)
+
+      expect(queue._dequeue()).toBe jobHigh1
 
     it "removes the job from the queue", ->
       queue.enqueue(request)

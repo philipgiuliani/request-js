@@ -14,7 +14,6 @@ class @RequestQueue
   enqueue: (request, priority=RequestQueue.NORMAL) ->
     job = new RequestQueueJob(request, priority)
     @jobs.push job
-    @jobs.sort @_sortJobs
 
     @_emitter.emit "enqueue", job
 
@@ -43,6 +42,3 @@ class @RequestQueue
 
     @currentJob = null
     @_checkQueue()
-
-  _sortJobs: (jobA, jobB) ->
-    jobB.priority - jobA.priority
