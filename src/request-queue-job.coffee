@@ -5,4 +5,5 @@ class RequestQueueJob
 
   run: (complete) ->
     @request.on "complete", complete(this)
+    @request.async = true
     @request.send()
