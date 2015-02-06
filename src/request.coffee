@@ -12,6 +12,8 @@ class @Request
   #   new Request(options)
 
   constructor: (options={}) ->
+    @response = null
+
     @_emitter = new Emitter
     @xhr = new XMLHttpRequest
 
@@ -27,20 +29,12 @@ class @Request
   send: ->
     @xhr.addEventListener "progress", @_progressChange.bind(this)
     @xhr.addEventListener "readystatechange", @_stateChange.bind(this)
-    @xhr.open(@method, @url, @async, @username, @password)
 
+    @xhr.open(@method, @url, @async, @username, @password)
     @_setRequestHeaders()
 
     @_emitter.emit "before", @xhr
     @xhr.send @_requestData()
-
-  response: ->
-    return false if @xhr.readyState isnt 4
-
-    try
-      JSON.parse(@xhr.responseText)
-    catch
-      @xhr.responseText
 
   on: (args...) -> @_emitter.on args...
 
@@ -56,12 +50,14 @@ class @Request
   _stateChange: ->
     return unless @xhr.readyState is XMLHttpRequest.DONE
 
-    if @xhr.status in [200..299]
-      @_emitter.emit "success", @response(), @xhr.status, @xhr
-    else
-      @_emitter.emit "error", @xhr, @xhr.status
+    @response = Response.new(@xhr)
 
-    @_emitter.emit "complete", @xhr, @xhr.status
+    if @xhr.status in [200..299]
+      @_emitter.emit "success", @response
+    else
+      @_emitter.emit "error", @response
+
+    @_emitter.emit "complete", @response
 
   _dataIsObject: ->
     @data && @data.constructor is Object
