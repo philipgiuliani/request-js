@@ -18,10 +18,10 @@ module.exports = ->
 
     resources:
       src: [
-        "src/module.coffee"
         "src/emitter.coffee"
         "src/helpers.coffee"
         "src/request.coffee"
+        "src/response.coffee"
       ]
       spec: ["spec/*.coffee"]
 
