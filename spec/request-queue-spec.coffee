@@ -41,12 +41,20 @@ describe "RequestQueue", ->
       jobNormal = queue.enqueue(request)
       jobHigh1 = queue.enqueue(request, RequestQueue.HIGH)
       jobLow = queue.enqueue(request, RequestQueue.LOW)
-      jobHigh3 = queue.enqueue(request, RequestQueue.HIGH)
+      jobHigh2 = queue.enqueue(request, RequestQueue.HIGH)
 
       expect(queue._dequeue()).toBe jobHigh1
+      expect(queue._dequeue()).toBe jobHigh2
+      expect(queue._dequeue()).toBe jobNormal
+      expect(queue._dequeue()).toBe jobLow
 
     it "removes the job from the queue", ->
       queue.enqueue(request)
       queue._dequeue()
 
       expect(queue.jobs.length).toBe 0
+
+    it "returns null if no job is queued", ->
+      result = queue._dequeue()
+
+      expect(result).toBeNull()

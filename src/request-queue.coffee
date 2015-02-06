@@ -35,7 +35,17 @@ class @RequestQueue
     request.send()
 
   _dequeue: ->
-    @jobs.shift()
+    return null if @jobs.length is 0
+
+    sortedJobs = @jobs.slice(0).sort (jobA, jobB) ->
+      jobB.priority - jobA.priority
+
+    job = sortedJobs[0]
+
+    jobIndex = @jobs.indexOf(job)
+    @jobs.splice(jobIndex, 1)
+
+    job
 
   _requestComplete: ->
     @_emitter.emit "finish", @currentJob
