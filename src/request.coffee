@@ -37,7 +37,6 @@ class @Request
     @xhr.send @_requestData()
 
   on: (args...) -> @_emitter.on args...
-
   off: (args...) -> @_emitter.off args...
 
   _setRequestHeaders: ->

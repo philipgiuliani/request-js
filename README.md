@@ -34,14 +34,14 @@ request.send()
 ```
 
 ### Handling the Response
-You can attach serval events by using `on` or `addEventListener` to the request to handle the response. The events must be attached before calling `.send()`.
+You can attach serval events by using `on` or `addEventListener` to the request.
 
 | Event name | Parameters        | When
 |------------|-------------------|---------------------------------
 | before     | xhr               | Before the request gets send, but after calling `xhr.open`. If you want to add additional headers, you can modify the `xhr` instance here.
-| success    | response          | If the request was success
-| error      | response          | If the server returned an error
-| complete   | response          | At the end of the request
+| success    | response          | If the request was success.
+| error      | response          | If the server returned an error.
+| complete   | response          | At the end of the request.
 
 #### Response
 The `response` is an instance of `Response` which contains `xhr`, `data`, `status`.
@@ -51,7 +51,41 @@ The `data` will be JSON if it was able to parse it.
 #### Example
 ```coffeescript
 request.on "success", (data, xhr, status) ->
-  alert("Request status was: #{status}")
+  console.log "Request status was: #{status}"
+```
+
+## Request Queue
+You can use the `RequestQueue` to enqueue requests and give them priorities. You can configure the amount of simultaneous requests. The default value is 1.
+
+There are currently 5 predefined priorities:
+* LOW: 0
+* NORMAL: 1
+* MEDIUM: 2
+* HIGH: 3
+
+You can also use an integer as priority. The default is **NORMAL**.
+
+```coffeescript
+queue = new RequestQueue(2) # 2 simultaneous requests
+request = new Request
+  url: "/api/v1/users.json"
+
+queue.enqueue(request, RequestQueue.MEDIUM)
+```
+
+### Events
+You can attach serval events by using `on` or `addEventListener` to the queue.
+
+| Event name | Parameters        | When
+|------------|-------------------|---------------------------------
+| enqueue    | job               | When a job gets added to the queue.
+| start      | job               | When a job starts.
+| finish     | job               | When a job finishs.
+
+### Example
+```coffeescript
+queue.on "enqueue", (job) ->
+  console.log "A new job has been added!"
 ```
 
 ## Contributing
