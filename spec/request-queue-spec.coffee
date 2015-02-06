@@ -8,6 +8,9 @@ describe "RequestQueue", ->
       url: "/api/v1/users.json"
 
   describe "::enqueue(request, options={})", ->
+    beforeEach ->
+      spyOn queue, "_checkQueue"
+
     it "adds a request to the queue", ->
       queue.enqueue(request)
 
