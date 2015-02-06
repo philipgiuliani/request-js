@@ -27,14 +27,9 @@ class @RequestQueue
   _checkQueue: ->
     return if @runningJobs.length >= @workerCount
 
-    while @jobs.length > 0 and @runningJobs.length < @workerCount
-      nextJob = @_dequeue()
-      @_emitter.emit "start", nextJob
-      @runningJobs.push nextJob
-
-      request = nextJob.request
-      request.on "complete", @_jobComplete.bind(this, nextJob)
-      request.send()
+    while @_jobCanBeQueue()
+      job = @_dequeue()
+      @_startJob job
 
   _dequeue: ->
     return null if @jobs.length is 0
@@ -46,6 +41,11 @@ class @RequestQueue
     @_removeJob(job)
 
     job
+
+  _startJob: (job) ->
+    @_emitter.emit "start", job
+    @runningJobs.push job
+    job.run @_jobComplete.bind(this)
 
   _removeJob: (job) ->
     index = @jobs.indexOf(job)
@@ -62,3 +62,6 @@ class @RequestQueue
     @runningJobs.splice(index, 1)
 
     @_checkQueue()
+
+  _jobCanBeQueue: ->
+    @jobs.length > 0 and @runningJobs.length < @workerCount
