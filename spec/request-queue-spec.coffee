@@ -25,3 +25,10 @@ describe "RequestQueue", ->
       job = queue.enqueue(request)
 
       expect(callback).toHaveBeenCalledWith(job)
+
+    it "sorts the jobs by the priority after adding one", ->
+      jobNormal = queue.enqueue(request, RequestQueue.NORMAL)
+      jobLow = queue.enqueue(request, RequestQueue.LOW)
+      jobHigh = queue.enqueue(request, RequestQueue.HIGH)
+
+      expect(queue.jobs).toEqual [jobHigh, jobNormal, jobLow]
