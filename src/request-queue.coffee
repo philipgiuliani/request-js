@@ -11,7 +11,7 @@ class @RequestQueue
     @currentJob = null
     @_emitter = new Emitter
 
-  enqueue: (request, priority=RequestQueue.NORMAL) ->
+  enqueue: (request, priority) ->
     job = new RequestQueueJob(request, priority)
     @jobs.push job
 
