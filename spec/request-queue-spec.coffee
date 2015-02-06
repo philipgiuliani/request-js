@@ -12,3 +12,8 @@ describe "RequestQueue", ->
       queue.enqueue(request)
 
       expect(queue.jobs.length).toEqual 1
+
+    it "returns a RequestQueueJob", ->
+      job = queue.enqueue(request)
+
+      expect(job).toEqual jasmine.any(RequestQueueJob)
