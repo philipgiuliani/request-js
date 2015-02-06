@@ -57,7 +57,7 @@ request.on "success", (data, xhr, status) ->
 ## Request Queue
 You can use the `RequestQueue` to enqueue requests and give them priorities. You can configure the amount of simultaneous requests. The default value is 1.
 
-There are currently 5 predefined priorities:
+There are currently 4 predefined priorities:
 * LOW: 0
 * NORMAL: 1
 * MEDIUM: 2
