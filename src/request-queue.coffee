@@ -40,12 +40,18 @@ class @RequestQueue
     sortedJobs = @jobs.slice(0).sort (jobA, jobB) ->
       jobB.priority - jobA.priority
 
-    job = sortedJobs[0]
-
-    jobIndex = @jobs.indexOf(job)
-    @jobs.splice(jobIndex, 1)
+    job = sortedJobs.shift()
+    @_removeJob(job)
 
     job
+
+  _removeJob: (job) ->
+    index = @jobs.indexOf(job)
+    if index > -1
+      @jobs.splice(index, 1)
+      return true
+
+    false
 
   _requestComplete: ->
     @_emitter.emit "finish", @currentJob
