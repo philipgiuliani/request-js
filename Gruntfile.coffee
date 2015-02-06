@@ -22,6 +22,7 @@ module.exports = ->
         "src/helpers.coffee"
         "src/request.coffee"
         "src/response.coffee"
+        "src/request-queue.coffee"
       ]
       spec: ["spec/*.coffee"]
 
