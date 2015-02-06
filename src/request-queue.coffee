@@ -16,3 +16,6 @@ class @RequestQueue
     @_emitter.emit "enqueue", job
     job
 
+  on: (args...) -> @_emitter.on args...
+
+  off: (args...) -> @_emitter.off args...

@@ -17,3 +17,11 @@ describe "RequestQueue", ->
       job = queue.enqueue(request)
 
       expect(job).toEqual jasmine.any(RequestQueueJob)
+
+    it "emits an event on adding a new job", ->
+      callback = jasmine.createSpy("enqueue")
+      queue.on "enqueue", callback
+
+      job = queue.enqueue(request)
+
+      expect(callback).toHaveBeenCalledWith(job)
