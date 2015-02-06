@@ -83,34 +83,3 @@ describe "Request", ->
       request.send()
 
       expect(beforeCallback).toHaveBeenCalled()
-
-    it "responds with a JSON object if the response is JSON", ->
-      jasmine.Ajax.stubRequest("/api/v1/users.json").andReturn
-        status: 200
-        responseText: JSON.stringify(user: { id: 1, firstName: "Philip" })
-
-
-      completeCallback = jasmine.createSpy("complete")
-
-      request = new Request
-        url: "/api/v1/users.json"
-        complete: completeCallback
-
-      request.send()
-
-      expect(request.response()).toEqual jasmine.any(Object)
-
-    it "response with the Text if the response isn't parseable as JSON", ->
-      jasmine.Ajax.stubRequest("/api/v1/users.json").andReturn
-        status: 200
-        responseText: "<errors>Amazing</errors>"
-
-      completeCallback = jasmine.createSpy("complete")
-
-      request = new Request
-        url: "/api/v1/users.json"
-        complete: completeCallback
-
-      request.send()
-
-      expect(request.response()).toEqual jasmine.any(String)
