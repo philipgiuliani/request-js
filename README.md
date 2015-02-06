@@ -39,11 +39,14 @@ You can attach serval events by using `on` or `addEventListener` to the request 
 | Event name | Parameters        | When
 |------------|-------------------|---------------------------------
 | before     | xhr               | Before the request gets send, but after calling `xhr.open`. If you want to add additional headers, you can modify the `xhr` instance here.
-| success    | data, xhr, status | If the request was success
-| error      | xhr, status       | If the server returned an error
-| complete   | xhr, status       | At the end of the request
+| success    | response          | If the request was success
+| error      | response          | If the server returned an error
+| complete   | response          | At the end of the request
 
-If the `responseText` was able to be parsed with `JSON.parse`, an `Object` will be returned.
+#### Response
+The `response` is an instance of `Response` which contains `xhr`, `data`, `status`.
+
+The `data` will be JSON if it was able to parse it.
 
 #### Example
 ```coffeescript
