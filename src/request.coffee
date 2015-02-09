@@ -49,9 +49,9 @@ class @Request
   _stateChange: ->
     return unless @xhr.readyState is XMLHttpRequest.DONE
 
-    @response = new Response(@xhr)
+    @response = new Response @xhr
 
-    if @xhr.status in [200..299]
+    if @response.success
       @_emitter.emit "success", @response
     else
       @_emitter.emit "error", @response
