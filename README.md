@@ -44,15 +44,21 @@ You can attach serval events by using `on` or `addEventListener` to the request.
 | complete   | response          | At the end of the request.
 
 #### Response
-The `response` is an instance of `Response` which contains `xhr`, `data`, `status`.
+The `response` is an instance of `Response` which contains `xhr`, `data`, `status` and `success`.
 
 The `data` will be JSON if it was able to parse it.
 
 #### Example
 ```coffeescript
 request.on "success", (response) ->
-  console.log "Request status was successful: #{response.status}"
+  console.log "Request was successful."
   console.log response.data
+
+request.on "complete", (response) ->
+  if request.success
+    console.log "Request was successful."
+  else
+    console.log "There was an error. Statuscode: #{response.status}"
 ```
 
 ## Request Queue
