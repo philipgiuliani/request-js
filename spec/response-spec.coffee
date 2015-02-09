@@ -22,7 +22,7 @@ describe "Response", ->
     response = new Response(xhr)
     expect(response.data).toEqual responseJSON
 
-  it "rreturns the data as text if it couldn't be parsed", ->
+  it "returns the data as text if it couldn't be parsed", ->
     responseXML = "<error>This is XML</error>"
     xhr.responseText = responseXML
 
