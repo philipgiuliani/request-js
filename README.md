@@ -55,7 +55,7 @@ request.on "success", (response) ->
   console.log response.data
 
 request.on "complete", (response) ->
-  if request.success
+  if response.success
     console.log "Request was successful."
   else
     console.log "There was an error. Statuscode: #{response.status}"
