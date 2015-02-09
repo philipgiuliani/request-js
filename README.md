@@ -50,8 +50,9 @@ The `data` will be JSON if it was able to parse it.
 
 #### Example
 ```coffeescript
-request.on "success", (data, xhr, status) ->
-  console.log "Request status was: #{status}"
+request.on "success", (response) ->
+  console.log "Request status was successful: #{response.status}"
+  console.log response.data
 ```
 
 ## Request Queue
