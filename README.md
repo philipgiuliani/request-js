@@ -7,15 +7,15 @@ Get the latest version from [Github Releases](https://github.com/philipgiuliani/
 ## Options
 ```javascript
 request = new Request({
-  url: "/api/v1/users.json", # URL of the request
-  method: "POST", # Default is `GET`
-  async: false, # Default is `true`
-  data: { firstName: "John" }, # Data to submit, default is `null`
+  url: "/api/v1/users.json", // URL of the request
+  method: "POST", // Default is `GET`
+  async: false, // Default is `true`
+  data: { firstName: "John" }, // Data to submit, default is `null`
 
-  before: function (xhr) { true }
-  success: function (response) { true }
-  error: function (response) { true }
-  complete: function (response) { true }
+  before: function(xhr) { true }
+  success: function(response) { true }
+  error: function(response) { true }
+  complete: function(response) { true }
 });
 ```
 
@@ -53,12 +53,12 @@ The `data` will be JSON if it was able to parse it.
 
 #### Example
 ```javascript
-request.on("success", function (response) {
-  console.log ("Request was successful.");
-  console.log (response.data);
+request.on("success", function(response) {
+  console.log("Request was successful.");
+  console.log(response.data);
 });
 
-request.on("complete", function (response) {
+request.on("complete", function(response) {
   if (response.success) {
     console.log("Request was successful.");
   }
@@ -99,7 +99,7 @@ You can attach serval events by using `on` or `addEventListener` to the queue.
 
 ### Example
 ```javascript
-queue.on("enqueue", function (job) {
+queue.on("enqueue", function(job) {
   console.log("A new job has been added!");
 });
 ```
