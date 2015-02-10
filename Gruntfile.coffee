@@ -22,6 +22,12 @@ module.exports = ->
         "src/helpers.coffee"
         "src/request.coffee"
         "src/response.coffee"
+      ]
+      srcFull: [
+        "src/emitter.coffee"
+        "src/helpers.coffee"
+        "src/request.coffee"
+        "src/response.coffee"
         "src/request-queue.coffee"
         "src/request-queue-job.coffee"
       ]
@@ -30,7 +36,7 @@ module.exports = ->
     coffee:
       specs:
         files:
-          "<%= meta.temp %>/<%= meta.file %>.js": "<%= resources.src %>"
+          "<%= meta.temp %>/<%= meta.file %>.js": "<%= resources.srcFull %>"
           "<%= meta.temp %>/spec.js": "<%= resources.spec %>"
         options:
           bare: true
@@ -38,6 +44,7 @@ module.exports = ->
       build:
         files:
           "<%= meta.build %>/<%= meta.file %>.js": "<%= resources.src %>"
+          "<%= meta.build %>/<%= meta.file %>_with_queue.js": "<%= resources.srcFull %>"
         options:
           join: true
 
@@ -55,6 +62,7 @@ module.exports = ->
       my_target:
         files:
           "<%= meta.build %>/<%= meta.file %>.min.js": "<%= meta.build %>/<%= meta.file %>.js"
+          "<%= meta.build %>/<%= meta.file %>_with_queue.min.js": "<%= meta.build %>/<%= meta.file %>_with_queue.js"
 
     usebanner:
       options:
@@ -65,6 +73,8 @@ module.exports = ->
         src: [
           "<%= meta.build %>/<%= meta.file %>.js"
           "<%= meta.build %>/<%= meta.file %>.min.js"
+          "<%= meta.build %>/<%= meta.file %>_with_queue.js"
+          "<%= meta.build %>/<%= meta.file %>_with_queue.min.js"
         ]
 
     @loadNpmTasks 'grunt-contrib-coffee'
