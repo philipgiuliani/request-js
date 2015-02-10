@@ -12,9 +12,9 @@ request = new Request({
   async: false, // Default is `true`
   data: { firstName: "John" }, // Data to submit, default is `null`
 
-  before: function(xhr) { true }
-  success: function(response) { true }
-  error: function(response) { true }
+  before: function(xhr) { true },
+  success: function(response) { true },
+  error: function(response) { true },
   complete: function(response) { true }
 });
 ```
