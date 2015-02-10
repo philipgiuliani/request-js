@@ -5,32 +5,35 @@ Request JS is a wrapper around `XMLHttpRequest` which simplifies its usage and m
 Get the latest version from [Github Releases](https://github.com/philipgiuliani/request-js/releases).
 
 ## Options
-```coffeescript
-request = new Request
-  url: "/api/v1/users.json" # URL of the request
-  method: "POST" # Default is `GET`
-  async: false # Default is `true`
-  data: { firstName: "John" } # Data to submit, default is `null`
+```javascript
+request = new Request({
+  url: "/api/v1/users.json", # URL of the request
+  method: "POST", # Default is `GET`
+  async: false, # Default is `true`
+  data: { firstName: "John" }, # Data to submit, default is `null`
 
-  before: (xhr) -> true
-  success: (response) -> true
-  error: (response) -> true
-  complete: (response) -> true
+  before: function (xhr) { true }
+  success: function (response) { true }
+  error: function (response) { true }
+  complete: function (response) { true }
+});
 ```
 
 For the callback description see [Handling the Response](#handling-the-response).
 
 ## Examples
 ### Making a Request
-```coffeescript
-request = new Request
-  url: "/api/v1/users.json"
-  method: "POST"
-  data:
-    firstName: "John"
+```javascript
+request = new Request({
+  url: "/api/v1/users.json",
+  method: "POST",
+  data: {
+    firstName: "John",
     lastName: "Doe"
+  }
+});
 
-request.send()
+request.send();
 ```
 
 ### Handling the Response
@@ -49,16 +52,20 @@ The `response` is an instance of `Response` which contains `xhr`, `data`, `statu
 The `data` will be JSON if it was able to parse it.
 
 #### Example
-```coffeescript
-request.on "success", (response) ->
-  console.log "Request was successful."
-  console.log response.data
+```javascript
+request.on("success", function (response) {
+  console.log ("Request was successful.");
+  console.log (response.data);
+});
 
-request.on "complete", (response) ->
-  if response.success
-    console.log "Request was successful."
-  else
-    console.log "There was an error. Statuscode: #{response.status}"
+request.on("complete", function (response) {
+  if (response.success) {
+    console.log("Request was successful.");
+  }
+  else {
+    console.log("There was an error. Statuscode: #{response.status}");
+  }
+});
 ```
 
 ## Request Queue
@@ -72,12 +79,13 @@ There are currently 4 predefined priorities:
 
 You can also use an integer as priority. The default is **NORMAL**.
 
-```coffeescript
-queue = new RequestQueue(2) # 2 simultaneous requests
-request = new Request
+```javascript
+queue = new RequestQueue(2); # 2 simultaneous requests
+request = new Request({
   url: "/api/v1/users.json"
+});
 
-queue.enqueue(request, RequestQueue.MEDIUM)
+queue.enqueue(request, RequestQueue.MEDIUM);
 ```
 
 ### Events
@@ -90,9 +98,10 @@ You can attach serval events by using `on` or `addEventListener` to the queue.
 | finish     | job               | When a job finishs.
 
 ### Example
-```coffeescript
-queue.on "enqueue", (job) ->
-  console.log "A new job has been added!"
+```javascript
+queue.on("enqueue", function (job) {
+  console.log("A new job has been added!");
+});
 ```
 
 ## Contributing
