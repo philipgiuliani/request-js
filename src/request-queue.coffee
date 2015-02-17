@@ -27,7 +27,7 @@ class @RequestQueue
   _checkQueue: ->
     return if @runningJobs.length >= @workerCount
 
-    while @_jobCanBeQueue()
+    while @jobs.length > 0 and @runningJobs.length < @workerCount
       job = @_dequeue()
       @_startJob job
 
@@ -62,6 +62,3 @@ class @RequestQueue
     @runningJobs.splice(index, 1)
 
     @_checkQueue()
-
-  _jobCanBeQueue: ->
-    @jobs.length > 0 and @runningJobs.length < @workerCount
