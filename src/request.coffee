@@ -36,8 +36,8 @@ class @Request
     @_emitter.emit "before", @xhr
     @xhr.send @_requestData()
 
-  on: (args...) -> @_emitter.on args...
-  off: (args...) -> @_emitter.off args...
+  on: -> @_emitter.on.apply @_emitter, arguments
+  off: -> @_emitter.off.apply @_emitter, arguments
 
   _setRequestHeaders: ->
     if @_dataIsObject()

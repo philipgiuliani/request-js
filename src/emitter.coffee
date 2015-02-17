@@ -27,6 +27,3 @@ class Emitter
       for listener in listeners.slice 0
         listener.apply(this, args)
     this
-
-Emitter.addEventListener = Emitter.on
-Emitter.removeEventListener = Emitter.off

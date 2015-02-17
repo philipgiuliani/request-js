@@ -21,8 +21,8 @@ class @RequestQueue
 
     job
 
-  on: (args...) -> @_emitter.on args...
-  off: (args...) -> @_emitter.off args...
+  on: -> @_emitter.on.apply @_emitter, arguments
+  off: -> @_emitter.off.apply @_emitter, arguments
 
   _checkQueue: ->
     return if @runningJobs.length >= @workerCount
