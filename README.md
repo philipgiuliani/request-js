@@ -81,10 +81,8 @@ You can also use an integer as priority. The default is **NORMAL**.
 
 ```javascript
 queue = new RequestQueue(2); // 2 simultaneous requests
-request = new Request({
-  url: "/api/v1/users.json"
-});
 
+request = new Request({ url: "/api/v1/users.json" });
 job = new RequestJob(request, RequestQueue.MEDIUM);
 
 queue.enqueue(job);
