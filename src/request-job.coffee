@@ -1,7 +1,5 @@
 class @RequestJob
-  constructor: (request, priority=RequestQueue.NORMAL) ->
-    @request = request
-    @priority = priority
+  constructor: (@request, @priority=RequestQueue.NORMAL) ->
 
   run: (complete) ->
     @request.on "complete", complete.bind(this)
