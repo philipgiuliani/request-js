@@ -1,5 +1,5 @@
 describe "RequestQueue", ->
-  request = queue = null
+  request = queue = job = null
 
   beforeEach ->
     queue = new RequestQueue
@@ -7,41 +7,43 @@ describe "RequestQueue", ->
     request = new Request
       url: "/api/v1/users.json"
 
+    job = new RequestJob(request)
+
   describe "::enqueue(request, options={})", ->
     beforeEach ->
       spyOn queue, "_checkQueue"
 
-    it "adds a request to the queue", ->
-      queue.enqueue(request)
+    it "adds a job to the queue", ->
+      queue.enqueue(job)
 
       expect(queue.jobs.length).toEqual 1
 
-    it "returns a RequestQueueJob", ->
-      job = queue.enqueue(request)
+    it "returns a RequestJob", ->
+      queuedJob = queue.enqueue(job)
 
-      expect(job).toEqual jasmine.any(RequestQueueJob)
+      expect(job).toEqual jasmine.any(RequestJob)
 
     it "emits an event on adding a new job", ->
       callback = jasmine.createSpy("enqueue")
       queue.on "enqueue", callback
 
-      job = queue.enqueue(request)
+      queuedJob = queue.enqueue(job)
 
-      expect(callback).toHaveBeenCalledWith(job)
+      expect(callback).toHaveBeenCalledWith(queuedJob)
 
   describe "::_dequeue()", ->
     beforeEach ->
       spyOn queue, "_checkQueue"
 
     it "gets the next job in the queue", ->
-      job = queue.enqueue(request)
-      expect(queue._dequeue()).toBe job
+      queuedJob = queue.enqueue(job)
+      expect(queue._dequeue()).toBe queuedJob
 
     it "should get the next job sorted by the highest priority and time", ->
-      jobNormal = queue.enqueue(request)
-      jobHigh1 = queue.enqueue(request, RequestQueue.HIGH)
-      jobLow = queue.enqueue(request, RequestQueue.LOW)
-      jobHigh2 = queue.enqueue(request, RequestQueue.HIGH)
+      jobNormal = queue.enqueue(job)
+      jobHigh1 = queue.enqueue(job, RequestQueue.HIGH)
+      jobLow = queue.enqueue(job, RequestQueue.LOW)
+      jobHigh2 = queue.enqueue(job, RequestQueue.HIGH)
 
       expect(queue._dequeue()).toBe jobHigh1
       expect(queue._dequeue()).toBe jobHigh2
@@ -49,7 +51,7 @@ describe "RequestQueue", ->
       expect(queue._dequeue()).toBe jobLow
 
     it "removes the job from the queue", ->
-      queue.enqueue(request)
+      queue.enqueue(job)
       queue._dequeue()
 
       expect(queue.jobs.length).toBe 0

@@ -85,7 +85,9 @@ request = new Request({
   url: "/api/v1/users.json"
 });
 
-queue.enqueue(request, RequestQueue.MEDIUM);
+job = new RequestJob(request, RequestQueue.MEDIUM);
+
+queue.enqueue(job);
 ```
 
 ### Events

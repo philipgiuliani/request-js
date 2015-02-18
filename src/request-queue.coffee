@@ -11,14 +11,11 @@ class @RequestQueue
     @runningJobs = []
     @_emitter = new Emitter
 
-  enqueue: (request, priority) ->
-    job = new RequestQueueJob(request, priority)
+  enqueue: (job) ->
     @jobs.push job
 
     @_emitter.emit "enqueue", job
-
     @_checkQueue()
-
     job
 
   on: -> @_emitter.on.apply @_emitter, arguments
