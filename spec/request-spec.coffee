@@ -35,18 +35,18 @@ describe "Request", ->
     it "initializes a new XHR request", ->
       expect(request.xhr).toEqual jasmine.any(XMLHttpRequest)
 
-  # describe "Class methods to set the method nicer", ->
-  #   describe ".POST()", ->
-  #     request = null
-  #
-  #     beforeEach ->
-  #       request = new Request.POST
-  #
-  #     it "returns a new instance of `Request`", ->
-  #       expect(request).toEqual jasmine.any(Request)
-  #
-  #     it "sets the method to `POST`", ->
-  #       expect(request.method).toEqual "POST"
+  describe "Class methods to set the method nicer", ->
+    describe ".POST()", ->
+      request = null
+
+      beforeEach ->
+        request = new Request.POST
+
+      it "returns a new instance of `Request`", ->
+        expect(request).toEqual jasmine.any(Request)
+
+      it "sets the method to `POST`", ->
+        expect(request.method).toEqual "POST"
 
   describe "::_requestData()", ->
     it "returns null when no data is given", ->

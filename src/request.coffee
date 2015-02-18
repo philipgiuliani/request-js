@@ -7,9 +7,19 @@ class @Request
     async: true
     data: null
 
-  # @POST = (options={}) ->
-  #   options.method = "POST"
-  #   new Request(options)
+  METHODS = [
+    "GET"
+    "POST"
+    "PUT"
+    "DELETE"
+  ]
+
+  @_addRequestMethod = (method) ->
+    @[method] = (options={}) ->
+      options.method = method
+      new Request(options)
+
+  @_addRequestMethod(method) for method in METHODS
 
   constructor: (options={}) ->
     @response = null
