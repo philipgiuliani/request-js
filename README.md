@@ -4,7 +4,8 @@ Request JS is a wrapper around `XMLHttpRequest` which simplifies its usage and m
 
 Get the latest version from [Github Releases](https://github.com/philipgiuliani/request-js/releases).
 
-## Options
+## Usage
+### Making a Request
 ```javascript
 request = new Request({
   url: "/api/v1/users.json", // URL of the request
@@ -16,21 +17,6 @@ request = new Request({
   success: function(response) { true },
   error: function(response) { true },
   complete: function(response) { true }
-});
-```
-
-For the callback description see [Handling the Response](#handling-the-response).
-
-## Examples
-### Making a Request
-```javascript
-request = new Request({
-  url: "/api/v1/users.json",
-  method: "POST",
-  data: {
-    firstName: "John",
-    lastName: "Doe"
-  }
 });
 
 request.send();
