@@ -15,7 +15,6 @@ module.exports = ->
        */
       """
 
-
     resources:
       src: [
         "src/emitter.coffee"
