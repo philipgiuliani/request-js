@@ -25,7 +25,11 @@ class @Request
     @response = null
 
     @_emitter = new Emitter
-    @xhr = new XMLHttpRequest
+
+    if !options.cors? || (options.cors && "withCredentials" in new XMLHttpRequest())
+      @xhr = new XMLHttpRequest
+    else
+      @xhr = new XDomainRequest
 
     events = ["before", "success", "error", "complete", "progress"]
     for event in events
