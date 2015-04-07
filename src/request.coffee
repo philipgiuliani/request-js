@@ -1,7 +1,7 @@
 class @Request
   Helpers.includeInto(this)
 
-  DEFAULTS =
+  _DEFAULTS =
     url: null
     method: "GET"
     async: true
@@ -33,7 +33,7 @@ class @Request
         @_emitter.on event, options[event]
         delete options[event]
 
-    @merge this, DEFAULTS
+    @merge this, _DEFAULTS
     @merge this, options
 
   send: ->
