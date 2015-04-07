@@ -2,6 +2,9 @@ CHANGELOG
 =========
 
 ## HEAD (Unreleased)
+*(no changes)*
+
+## 1.0.0 (07.04.2015)
 * Added `response.success`.
 * Changed the queue to enqueue jobs instead of requests.
 * Added request class methods which will initialize the request and set the method. The current available methods are: `GET`, `PUT`, `POST`, `DELETE`.
