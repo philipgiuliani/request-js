@@ -1,5 +1,5 @@
 /**
- * request-js - version 0.0.1
+ * request-js - version 1.0.0
  * Request JS is a wrapper around XMLHttpRequest which simplifies its usage and makes it more readable.
  * Copyright 2015 by Philip Giuliani - info@philipg.net
  */
@@ -81,11 +81,11 @@
   };
 
   this.Request = (function() {
-    var DEFAULTS, METHODS, method, _i, _len;
+    var METHODS, method, _DEFAULTS, _i, _len;
 
     Helpers.includeInto(Request);
 
-    DEFAULTS = {
+    _DEFAULTS = {
       url: null,
       method: "GET",
       async: true,
@@ -116,7 +116,11 @@
       }
       this.response = null;
       this._emitter = new Emitter;
-      this.xhr = new XMLHttpRequest;
+      if ((options.cors == null) || (options.cors && __indexOf.call(new XMLHttpRequest(), "withCredentials") >= 0)) {
+        this.xhr = new XMLHttpRequest;
+      } else {
+        this.xhr = new XDomainRequest;
+      }
       events = ["before", "success", "error", "complete", "progress"];
       for (_j = 0, _len1 = events.length; _j < _len1; _j++) {
         event = events[_j];
@@ -125,7 +129,7 @@
           delete options[event];
         }
       }
-      this.merge(this, DEFAULTS);
+      this.merge(this, _DEFAULTS);
       this.merge(this, options);
     }
 
