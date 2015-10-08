@@ -142,11 +142,23 @@
       return this.xhr.send(this._requestData());
     };
 
+    Request.prototype.abort = function() {
+      return this.xhr.abort();
+    };
+
     Request.prototype.on = function() {
       return this._emitter.on.apply(this._emitter, arguments);
     };
 
     Request.prototype.off = function() {
+      return this._emitter.off.apply(this._emitter, arguments);
+    };
+
+    Request.prototype.addEventListener = function() {
+      return this._emitter.on.apply(this._emitter, arguments);
+    };
+
+    Request.prototype.removeEventListener = function() {
       return this._emitter.off.apply(this._emitter, arguments);
     };
 
