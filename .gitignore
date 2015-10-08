@@ -1,3 +1,5 @@
 node_modules
 *.log
 temp
+.grunt
+_SpecRunner.html
