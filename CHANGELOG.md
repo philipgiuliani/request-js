@@ -1,8 +1,7 @@
-CHANGELOG
-=========
+# CHANGELOG
 
 ## HEAD (Unreleased)
-*(no changes)*
+* Added `request.abort()`
 
 ## 1.0.0 (07.04.2015)
 * Added `response.success`.
