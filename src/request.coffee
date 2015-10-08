@@ -50,8 +50,13 @@ class @Request
     @_emitter.emit "before", @xhr
     @xhr.send @_requestData()
 
+  abort: ->
+    @xhr.abort()
+
   on: -> @_emitter.on.apply @_emitter, arguments
   off: -> @_emitter.off.apply @_emitter, arguments
+  addEventListener: -> @_emitter.on.apply @_emitter, arguments
+  removeEventListener: -> @_emitter.off.apply @_emitter, arguments
 
   _setRequestHeaders: ->
     if @_dataIsObject()
