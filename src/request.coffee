@@ -38,12 +38,13 @@ class @Request
         @_emitter.on event, options[event]
         delete options[event]
 
+    @merge this, _DEFAULTS
+
     if options.form?
       @url = options.form.action
       @method = options.form.method
       @data = new FormData(options.form)
 
-    @merge this, _DEFAULTS
     @merge this, options
 
   send: ->
