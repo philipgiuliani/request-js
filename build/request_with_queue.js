@@ -130,12 +130,12 @@
           delete options[event];
         }
       }
+      this.merge(this, _DEFAULTS);
       if (options.form != null) {
         this.url = options.form.action;
         this.method = options.form.method;
         this.data = new FormData(options.form);
       }
-      this.merge(this, _DEFAULTS);
       this.merge(this, options);
     }
 
