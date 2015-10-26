@@ -6,6 +6,7 @@ class @Request
     method: "GET"
     async: true
     data: null
+    form: null
 
   METHODS = [
     "GET"
@@ -36,6 +37,11 @@ class @Request
       if typeof options[event] is "function"
         @_emitter.on event, options[event]
         delete options[event]
+
+    if options.form?
+      @url = options.form.action
+      @method = options.form.method
+      @data = new FormData(options.form)
 
     @merge this, _DEFAULTS
     @merge this, options

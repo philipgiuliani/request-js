@@ -1,7 +1,8 @@
 # CHANGELOG
 
 ## HEAD (Unreleased)
-* Added `request.abort()`
+* Added `request.abort()`.
+* Added `form` option, which will set the action, method and data automatically.
 
 ## 1.0.0 (07.04.2015)
 * Added `response.success`.

@@ -89,7 +89,8 @@
       url: null,
       method: "GET",
       async: true,
-      data: null
+      data: null,
+      form: null
     };
 
     METHODS = ["GET", "POST", "PUT", "DELETE"];
@@ -128,6 +129,11 @@
           this._emitter.on(event, options[event]);
           delete options[event];
         }
+      }
+      if (options.form != null) {
+        this.url = options.form.action;
+        this.method = options.form.method;
+        this.data = new FormData(options.form);
       }
       this.merge(this, _DEFAULTS);
       this.merge(this, options);
