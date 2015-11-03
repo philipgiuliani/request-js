@@ -95,6 +95,8 @@
 
     METHODS = ["GET", "POST", "PUT", "DELETE"];
 
+    Request.interceptor = null;
+
     Request._addRequestMethod = function(method) {
       return this[method] = function(options) {
         if (options == null) {
@@ -185,10 +187,12 @@
         return;
       }
       this.response = new Response(this.xhr);
-      if (this.response.success) {
-        this._emitter.emit("success", this.response);
-      } else {
-        this._emitter.emit("error", this.response);
+      if (!Request.interceptor || Request.interceptor(this.response)) {
+        if (this.response.success) {
+          this._emitter.emit("success", this.response);
+        } else {
+          this._emitter.emit("error", this.response);
+        }
       }
       return this._emitter.emit("complete", this.response);
     };
