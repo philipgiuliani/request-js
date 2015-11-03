@@ -16,6 +16,8 @@ class @Request
     "DELETE"
   ]
 
+  @interceptor = null
+
   @_addRequestMethod = (method) ->
     @[method] = (options={}) ->
       options.method = method
@@ -82,10 +84,11 @@ class @Request
 
     @response = new Response @xhr, reviver: @reviver
 
-    if @response.success
-      @_emitter.emit "success", @response
-    else
-      @_emitter.emit "error", @response
+    if !Request.interceptor || Request.interceptor(@response)
+      if @response.success
+        @_emitter.emit "success", @response
+      else
+        @_emitter.emit "error", @response
 
     @_emitter.emit "complete", @response
 
