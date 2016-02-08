@@ -3,6 +3,8 @@
 ## HEAD (Unreleased)
 * Added `request.abort()`.
 * Added `form` option, which will set the action, method and data automatically.
+* Added `X-Requested-With` header to get it working with rails `request.xhr?` method.
+* Added `response.rawData` to access the `xhr.responseText`.
 
 ## 1.0.0 (07.04.2015)
 * Added `response.success`.

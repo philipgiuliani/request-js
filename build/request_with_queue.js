@@ -215,7 +215,7 @@
       this.status = this.xhr.status;
       this.data = this._parseResponse();
       this.success = this._wasSuccess();
-      this.raw_data = this.xhr.responseText;
+      this.rawData = this.xhr.responseText;
     }
 
     Response.prototype._parseResponse = function() {
