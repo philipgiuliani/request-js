@@ -1,5 +1,5 @@
 /**
- * request-js - version 1.0.0
+ * request-js - version 1.1.0
  * Request JS is a wrapper around XMLHttpRequest which simplifies its usage and makes it more readable.
  * Copyright 2016 by Philip Giuliani - info@philipg.net
  */

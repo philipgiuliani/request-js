@@ -1,8 +1,8 @@
 {
   "name": "request-js",
   "description": "Request JS is a wrapper around XMLHttpRequest which simplifies its usage and makes it more readable.",
-  "version": "1.0.0",
-  "homepage": "https://github.com/philipgiuliani/requester-js",
+  "version": "1.1.0",
+  "homepage": "https://github.com/philipgiuliani/request-js",
   "author": {
     "name": "Philip Giuliani",
     "email": "info@philipg.net"

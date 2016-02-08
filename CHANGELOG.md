@@ -1,6 +1,9 @@
 # CHANGELOG
 
 ## HEAD (Unreleased)
+*(no changes)*
+
+## 1.1.0 (08.02.2016)
 * Added `request.abort()`.
 * Added `form` option, which will set the action, method and data automatically.
 * Added `X-Requested-With` header to get it working with rails `request.xhr?` method.
