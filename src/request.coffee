@@ -66,6 +66,8 @@ class @Request
   removeEventListener: -> @_emitter.off.apply @_emitter, arguments
 
   _setRequestHeaders: ->
+    @xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest")
+
     if @_dataIsObject()
       @xhr.setRequestHeader "Content-Type", "application/json;charset=UTF-8"
 

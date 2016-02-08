@@ -1,7 +1,7 @@
 /**
  * request-js - version 1.0.0
  * Request JS is a wrapper around XMLHttpRequest which simplifies its usage and makes it more readable.
- * Copyright 2015 by Philip Giuliani - info@philipg.net
+ * Copyright 2016 by Philip Giuliani - info@philipg.net
  */
 (function() {
   var Emitter, Helpers, Response,
@@ -169,6 +169,7 @@
     };
 
     Request.prototype._setRequestHeaders = function() {
+      this.xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
       if (this._dataIsObject()) {
         return this.xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
       }
