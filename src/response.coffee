@@ -3,6 +3,7 @@ class Response
     @status = @xhr.status
     @data = @_parseResponse()
     @success = @_wasSuccess()
+    @raw_data = @xhr.responseText
 
   _parseResponse: ->
     try
