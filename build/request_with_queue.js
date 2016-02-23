@@ -96,6 +96,8 @@
 
     METHODS = ["GET", "POST", "PUT", "DELETE"];
 
+    Request.interceptor = null;
+
     Request._addRequestMethod = function(method) {
       return this[method] = function(options) {
         if (options == null) {
@@ -172,6 +174,7 @@
     };
 
     Request.prototype._setRequestHeaders = function() {
+      this.xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
       if (this._dataIsObject()) {
         return this.xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
       }
@@ -190,10 +193,12 @@
       this.response = new Response(this.xhr, {
         reviver: this.reviver
       });
-      if (this.response.success) {
-        this._emitter.emit("success", this.response);
-      } else {
-        this._emitter.emit("error", this.response);
+      if (!Request.interceptor || Request.interceptor(this.response)) {
+        if (this.response.success) {
+          this._emitter.emit("success", this.response);
+        } else {
+          this._emitter.emit("error", this.response);
+        }
       }
       return this._emitter.emit("complete", this.response);
     };
