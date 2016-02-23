@@ -8,6 +8,7 @@ class @Request
     data: null
     form: null
     reviver: null
+    interceptor: null
 
   METHODS = [
     "GET"
@@ -49,6 +50,9 @@ class @Request
       @method = options.form.method
       @data = new FormData(options.form)
 
+    if Request.interceptor
+      @interceptor = Request.interceptor
+
     @merge this, options
 
   send: ->
@@ -84,7 +88,7 @@ class @Request
 
     @response = new Response @xhr, reviver: @reviver
 
-    if !Request.interceptor || Request.interceptor(@response)
+    if !@interceptor || @interceptor(@response)
       if @response.success
         @_emitter.emit "success", @response
       else

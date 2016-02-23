@@ -91,7 +91,8 @@
       async: true,
       data: null,
       form: null,
-      reviver: null
+      reviver: null,
+      interceptor: null
     };
 
     METHODS = ["GET", "POST", "PUT", "DELETE"];
@@ -139,6 +140,9 @@
         this.url = options.form.action;
         this.method = options.form.method;
         this.data = new FormData(options.form);
+      }
+      if (Request.interceptor) {
+        this.interceptor = Request.interceptor;
       }
       this.merge(this, options);
     }
@@ -193,7 +197,7 @@
       this.response = new Response(this.xhr, {
         reviver: this.reviver
       });
-      if (!Request.interceptor || Request.interceptor(this.response)) {
+      if (!this.interceptor || this.interceptor(this.response)) {
         if (this.response.success) {
           this._emitter.emit("success", this.response);
         } else {
