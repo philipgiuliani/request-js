@@ -1,7 +1,8 @@
 # CHANGELOG
 
 ## HEAD (Unreleased)
-*(no changes)*
+* Added `request.reviver` to set a reviver for JSON.parse.
+* Added `request.canceled` to know if the request has been canceled.
 
 ## 1.1.0 (08.02.2016)
 * Added `request.abort()`.

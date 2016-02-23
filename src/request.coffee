@@ -7,6 +7,7 @@ class @Request
     async: true
     data: null
     form: null
+    reviver: null
 
   METHODS = [
     "GET"
@@ -24,6 +25,7 @@ class @Request
 
   constructor: (options={}) ->
     @response = null
+    @canceled = false
 
     @_emitter = new Emitter
 
@@ -58,6 +60,7 @@ class @Request
     @xhr.send @_requestData()
 
   abort: ->
+    @canceled = true
     @xhr.abort()
 
   on: -> @_emitter.on.apply @_emitter, arguments
@@ -77,7 +80,7 @@ class @Request
   _stateChange: ->
     return unless @xhr.readyState is XMLHttpRequest.DONE
 
-    @response = new Response @xhr
+    @response = new Response @xhr, reviver: @reviver
 
     if @response.success
       @_emitter.emit "success", @response

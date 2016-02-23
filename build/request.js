@@ -90,7 +90,8 @@
       method: "GET",
       async: true,
       data: null,
-      form: null
+      form: null,
+      reviver: null
     };
 
     METHODS = ["GET", "POST", "PUT", "DELETE"];
@@ -116,6 +117,7 @@
         options = {};
       }
       this.response = null;
+      this.canceled = false;
       this._emitter = new Emitter;
       if ((options.cors == null) || (options.cors && __indexOf.call(new XMLHttpRequest(), "withCredentials") >= 0)) {
         this.xhr = new XMLHttpRequest;
@@ -149,6 +151,7 @@
     };
 
     Request.prototype.abort = function() {
+      this.canceled = true;
       return this.xhr.abort();
     };
 
@@ -169,7 +172,6 @@
     };
 
     Request.prototype._setRequestHeaders = function() {
-      this.xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
       if (this._dataIsObject()) {
         return this.xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
       }
@@ -185,7 +187,9 @@
       if (this.xhr.readyState !== XMLHttpRequest.DONE) {
         return;
       }
-      this.response = new Response(this.xhr);
+      this.response = new Response(this.xhr, {
+        reviver: this.reviver
+      });
       if (this.response.success) {
         this._emitter.emit("success", this.response);
       } else {
@@ -210,17 +214,20 @@
   })();
 
   Response = (function() {
-    function Response(xhr) {
+    function Response(xhr, options) {
       this.xhr = xhr;
+      if (options == null) {
+        options = {};
+      }
       this.status = this.xhr.status;
-      this.data = this._parseResponse();
+      this.data = this._parseResponse(options.reviver);
       this.success = this._wasSuccess();
       this.rawData = this.xhr.responseText;
     }
 
-    Response.prototype._parseResponse = function() {
+    Response.prototype._parseResponse = function(reviver) {
       try {
-        return JSON.parse(this.xhr.responseText);
+        return JSON.parse(this.xhr.responseText, reviver);
       } catch (_error) {
         return this.xhr.responseText;
       }

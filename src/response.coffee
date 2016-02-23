@@ -1,13 +1,13 @@
 class Response
-  constructor: (@xhr) ->
+  constructor: (@xhr, options={}) ->
     @status = @xhr.status
-    @data = @_parseResponse()
+    @data = @_parseResponse(options.reviver)
     @success = @_wasSuccess()
     @rawData = @xhr.responseText
 
-  _parseResponse: ->
+  _parseResponse: (reviver) ->
     try
-      JSON.parse(@xhr.responseText)
+      JSON.parse(@xhr.responseText, reviver)
     catch
       @xhr.responseText
 
